@@ -25,3 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* .footer_links{
+  display: flex;
+  flex-direction: column;
+} */
