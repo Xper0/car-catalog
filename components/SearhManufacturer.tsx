@@ -14,14 +14,16 @@ export const SearhManufacturer = ({
   const filteredManufacturers =
     query === ""
       ? manufactures
-      : manufactures
-          .filter((item: string) => item.toLowerCase().replace(/\s+/g, ""))
-          .includes(query.toLowerCase().replace(/\s+/g, ""));
-          console.log(filteredManufacturers)
+      : manufactures.filter((item: string) =>
+          item
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(query.toLowerCase().replace(/\s+/g, ""))
+        );
 
   return (
     <div className="search-manufacturer">
-      <Combobox>
+      <Combobox value={manufacturer} onChange={setManufacturer}>
         <div className="relative w-full">
           <Combobox.Button className="absolute top-3">
             <Image
@@ -46,14 +48,15 @@ export const SearhManufacturer = ({
             afterLeave={() => setQuery("")}
           >
             <Combobox.Options>
-              {filteredManufacturers.length > 0 && query !== "" ? (
+              {
+                /* {filteredManufacturers?.length > 0 && query === "" ? (
                 <Combobox.Option
                   value={query}
                   className="search-manufacturer_option"
                 >
                   Create "{query}"
                 </Combobox.Option>
-              ) : (
+              ) : ( */
                 filteredManufacturers.map((item) => (
                   <Combobox.Option
                     key={item}
@@ -64,10 +67,28 @@ export const SearhManufacturer = ({
                     }
                     value={item}
                   >
-                    {item}
+                    {({ active, selected }) => (
+                      <>
+                        <span
+                          className={`block trunncate ${
+                            selected ? "font-medium" : "font-norml"
+                          }`}
+                        >
+                          {item}
+                        </span>
+                        {selected ? (
+                          <span
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                              active ? "text-white" : "text-teal-600"
+                            }`}
+                          ></span>
+                        ) : null}
+                      </>
+                    )}
+                    {/* {item} */}
                   </Combobox.Option>
                 ))
-              )}
+              }
             </Combobox.Options>
           </Transition>
         </div>
